@@ -1,0 +1,37 @@
+
+.corazones{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+overflow:hidden;
+z-index:0;
+}
+
+.corazones span{
+position:absolute;
+font-size:20px;
+animation:flotar linear infinite;
+opacity:.7;
+will-change: transform, opacity;
+}
+
+@keyframes flotar{
+
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+50%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-10vh);
+opacity:0;
+}
+
+}
