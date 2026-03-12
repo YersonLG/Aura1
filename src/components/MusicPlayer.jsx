@@ -14,11 +14,11 @@ export default function MusicPlayer() {
     { id: 2, name: "cancion2.mp3", label: "Canción 2" }
   ];
 
+  const base = import.meta.env.BASE_URL;
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-
-    // Configurar volumen
     audio.volume = volume / 100;
   }, [volume]);
 
@@ -26,26 +26,22 @@ export default function MusicPlayer() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Cuando cambia la canción, resetear
     audio.currentTime = 0;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration);
+
     const handleEnded = () => {
-      // Reiniciar la canción cuando termine
       audio.currentTime = 0;
-      audio.play().catch(err => console.log("Error al reiniciar:", err));
+      audio.play().catch(() => {});
     };
 
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("loadedmetadata", updateDuration);
     audio.addEventListener("ended", handleEnded);
 
-    // Intentar reproducir si ya hay interacción previa
     if (isPlaying) {
-      audio.play().catch(err => {
-        console.log("No se puede autoplay, espera interacción:", err);
-      });
+      audio.play().catch(() => {});
     }
 
     return () => {
@@ -55,17 +51,15 @@ export default function MusicPlayer() {
     };
   }, [currentSong, isPlaying]);
 
-  // Escuchar la primera interacción del usuario
   useEffect(() => {
     const handleUserInteraction = () => {
       const audio = audioRef.current;
+
       if (audio) {
-        audio.play().catch(err => {
-          console.log("Error al reproducir:", err);
-        });
+        audio.play().catch(() => {});
         setIsPlaying(true);
       }
-      // Remover el listener después de la primera interacción
+
       document.removeEventListener("click", handleUserInteraction);
       document.removeEventListener("touchstart", handleUserInteraction);
     };
@@ -79,18 +73,16 @@ export default function MusicPlayer() {
     };
   }, []);
 
-
   const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play().catch(err => {
-          console.log("Error al reproducir:", err);
-        });
-        setIsPlaying(true);
-      }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      audio.play().catch(() => {});
+      setIsPlaying(true);
     }
   };
 
@@ -101,6 +93,7 @@ export default function MusicPlayer() {
   const handleVolumeChange = (e) => {
     const newVolume = e.target.value;
     setVolume(newVolume);
+
     if (audioRef.current) {
       audioRef.current.volume = newVolume / 100;
     }
@@ -109,6 +102,7 @@ export default function MusicPlayer() {
   const handleProgressChange = (e) => {
     const newTime = e.target.value;
     setCurrentTime(newTime);
+
     if (audioRef.current) {
       audioRef.current.currentTime = newTime;
     }
@@ -116,28 +110,31 @@ export default function MusicPlayer() {
 
   const formatTime = (seconds) => {
     if (!seconds || isNaN(seconds)) return "0:00";
+
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
+
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
   return (
     <div className="musicPlayer">
-      <audio 
-        ref={audioRef} 
-        src={`/${songs.find(s => s.id === currentSong)?.name}`}
-        crossOrigin="anonymous"
-        onError={(e) => console.log("Error al cargar audio:", e)}
+      <audio
+        ref={audioRef}
+        src={`${base}${songs.find(s => s.id === currentSong)?.name}`}
+        onError={() => console.log("Error cargando audio")}
       />
 
       <div className="playerContainer">
         <div className="playerControls">
+
           <button className="playBtn" onClick={togglePlay}>
             {isPlaying ? "⏸" : "▶"}
           </button>
 
           <div className="progressBar">
             <span className="time">{formatTime(currentTime)}</span>
+
             <input
               type="range"
               min="0"
@@ -146,6 +143,7 @@ export default function MusicPlayer() {
               onChange={handleProgressChange}
               className="slider"
             />
+
             <span className="time">{formatTime(duration)}</span>
           </div>
 
@@ -162,7 +160,8 @@ export default function MusicPlayer() {
           </div>
 
           <div className="volumeControl">
-            <span className="volumeIcon">🔊</span>
+            <span>🔊</span>
+
             <input
               type="range"
               min="0"
@@ -171,8 +170,10 @@ export default function MusicPlayer() {
               onChange={handleVolumeChange}
               className="volumeSlider"
             />
-            <span className="volumeValue">{volume}%</span>
+
+            <span>{volume}%</span>
           </div>
+
         </div>
       </div>
     </div>
