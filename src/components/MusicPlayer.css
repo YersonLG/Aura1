@@ -1,0 +1,268 @@
+.musicPlayer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+  padding: 15px 20px;
+  box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.playerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.playerControls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: white;
+}
+
+.playBtn {
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.playBtn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.playBtn:active {
+  transform: scale(0.95);
+}
+
+.progressBar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.time {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 30px;
+}
+
+.slider {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.3);
+}
+
+.volumeControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: auto;
+}
+
+.volumeIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.volumeSlider {
+  width: 100px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.volumeValue {
+  font-size: 12px;
+  min-width: 35px;
+  font-weight: 500;
+}
+
+.songSelector {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.songBtn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.songBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+}
+
+.songBtn.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e40af;
+  border-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.songBtn.active:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .musicPlayer {
+    padding: 12px 15px;
+  }
+
+  .playerControls {
+    gap: 10px;
+  }
+
+  .playBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .volumeControl {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .volumeSlider {
+    width: 80px;
+  }
+
+  .volumeValue {
+    font-size: 11px;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .musicPlayer {
+    padding: 10px 10px;
+  }
+
+  .playerControls {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .playBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .progressBar {
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .volumeControl {
+    order: 2;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .volumeSlider {
+    width: 60px;
+  }
+
+  .time {
+    font-size: 11px;
+    min-width: 25px;
+  }
+
+  .volumeIcon {
+    font-size: 16px;
+  }
+
+  .volumeValue {
+    font-size: 10px;
+    min-width: auto;
+  }
+}

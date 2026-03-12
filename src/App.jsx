@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Corazones from "./components/Corazones";
+import MusicPlayer from "./components/MusicPlayer";
 
 import foto1 from "./assets/foto1.jpeg";
 import foto2 from "./assets/foto2.jpeg";
@@ -409,7 +410,7 @@ Volver
 
 {pagina==="sorpresa" && (
 
-<div className="sorpresa">
+<div className="modalEstilo">
 
 {showConfetti && (
   <div className="confetti">
@@ -611,6 +612,8 @@ Cerrar
     </div>
   </div>
 )}
+
+<MusicPlayer />
 
 </div>
 
